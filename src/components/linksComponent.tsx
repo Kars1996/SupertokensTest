@@ -1,11 +1,11 @@
 "use client";
-import styles from "../page.module.css";
-import { BlogsIcon, GuideIcon, SignOutIcon } from "../../assets/images";
+import styles from "../app/page.module.css";
 import { recipeDetails } from "../config/frontend";
 import Link from "next/link";
 import Image from "next/image";
 import Session from "supertokens-auth-react/recipe/session";
 import SuperTokens from "supertokens-auth-react";
+import { BlogsIcon, GuideIcon, SignOutIcon } from "@/assets/images";
 
 const SignOutLink = (props: { name: string; link: string; icon: string }) => {
     return (

@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
 import { TryRefreshComponent } from "./tryRefreshClientComponent";
-import styles from "../page.module.css";
+import styles from "../app/page.module.css";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { CelebrateIcon, SeparatorLine } from "../../assets/images";
 import { CallAPIButton } from "./callApiButton";
 import { LinksComponent } from "./linksComponent";
 import { SessionAuthForNextJS } from "./sessionAuthForNextJS";
@@ -11,13 +10,14 @@ import jwksClient from "jwks-rsa";
 import JsonWebToken from "jsonwebtoken";
 import type { JwtHeader, JwtPayload, SigningKeyCallback } from "jsonwebtoken";
 import { appInfo } from "../config/appInfo";
+import { CelebrateIcon, SeparatorLine } from "@/assets/images";
 
 const client = jwksClient({
     jwksUri: `${appInfo.apiDomain}${appInfo.apiBasePath}/jwt/jwks.json`,
 });
 
 function getAccessToken(): string | undefined {
-    return cookies().get("sAccessToken")?.value;
+    return cookies().get("sAccessToken")?.value; /// @ts-ignore
 }
 
 function getPublicKey(header: JwtHeader, callback: SigningKeyCallback) {
@@ -65,9 +65,17 @@ async function getSSRSessionHelper(): Promise<{
         return { accessTokenPayload: undefined, hasToken, error: undefined };
     } catch (error) {
         if (error instanceof JsonWebToken.TokenExpiredError) {
-            return { accessTokenPayload: undefined, hasToken, error: undefined };
+            return {
+                accessTokenPayload: undefined,
+                hasToken,
+                error: undefined,
+            };
         }
-        return { accessTokenPayload: undefined, hasToken, error: error as Error };
+        return {
+            accessTokenPayload: undefined,
+            hasToken,
+            error: error as Error,
+        };
     }
 }
 
@@ -75,7 +83,12 @@ export async function HomePage() {
     const { accessTokenPayload, hasToken, error } = await getSSRSessionHelper();
 
     if (error) {
-        return <div>Something went wrong while trying to get the session. Error - {error.message}</div>;
+        return (
+            <div>
+                Something went wrong while trying to get the session. Error -{" "}
+                {error.message}
+            </div>
+        );
     }
 
     // `accessTokenPayload` will be undefined if it the session does not exist or has expired
@@ -105,18 +118,30 @@ export async function HomePage() {
         <SessionAuthForNextJS>
             <div className={styles.homeContainer}>
                 <div className={styles.mainContainer}>
-                    <div className={`${styles.topBand} ${styles.successTitle} ${styles.bold500}`}>
-                        <Image src={CelebrateIcon} alt="Login successful" className={styles.successIcon} /> Login
-                        successful
+                    <div
+                        className={`${styles.topBand} ${styles.successTitle} ${styles.bold500}`}
+                    >
+                        <Image
+                            src={CelebrateIcon}
+                            alt="Login successful"
+                            className={styles.successIcon}
+                        />{" "}
+                        Login successful
                     </div>
                     <div className={styles.innerContent}>
                         <div>Your userID is:</div>
-                        <div className={`${styles.truncate} ${styles.userId}`}>{accessTokenPayload.sub}</div>
+                        <div className={`${styles.truncate} ${styles.userId}`}>
+                            {accessTokenPayload.sub}
+                        </div>
                         <CallAPIButton />
                     </div>
                 </div>
                 <LinksComponent />
-                <Image className={styles.separatorLine} src={SeparatorLine} alt="separator" />
+                <Image
+                    className={styles.separatorLine}
+                    src={SeparatorLine}
+                    alt="separator"
+                />
             </div>
         </SessionAuthForNextJS>
     );

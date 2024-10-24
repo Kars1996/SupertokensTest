@@ -1,6 +1,6 @@
 import { getAppDirRequestHandler } from "supertokens-node/nextjs";
 import { NextRequest, NextResponse } from "next/server";
-import { ensureSuperTokensInit } from "../../../config/backend";
+import { ensureSuperTokensInit } from "@/config/backend";
 
 ensureSuperTokensInit();
 

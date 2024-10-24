@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../page.module.css";
+import styles from "../app/page.module.css";
 
 export const CallAPIButton = () => {
     const fetchUserData = async () => {
