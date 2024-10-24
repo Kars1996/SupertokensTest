@@ -16,8 +16,9 @@ const client = jwksClient({
     jwksUri: `${appInfo.apiDomain}${appInfo.apiBasePath}/jwt/jwks.json`,
 });
 
-function getAccessToken(): string | undefined {
-    return cookies().get("sAccessToken")?.value; /// @ts-ignore
+async function getAccessToken(): Promise<string | undefined> {
+    const cookieStore = await cookies();
+    return cookieStore.get("sAccessToken")?.value;
 }
 
 function getPublicKey(header: JwtHeader, callback: SigningKeyCallback) {
@@ -55,7 +56,7 @@ async function getSSRSessionHelper(): Promise<{
     hasToken: boolean;
     error: Error | undefined;
 }> {
-    const accessToken = getAccessToken();
+    const accessToken = await getAccessToken();
     const hasToken = !!accessToken;
     try {
         if (accessToken) {
