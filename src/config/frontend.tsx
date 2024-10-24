@@ -9,9 +9,13 @@ import { ThirdPartyPreBuiltUI } from "supertokens-auth-react/recipe/thirdparty/p
 import { PasswordlessPreBuiltUI } from "supertokens-auth-react/recipe/passwordless/prebuiltui";
 import { EmailPasswordPreBuiltUI } from "supertokens-auth-react/recipe/emailpassword/prebuiltui";
 
-const routerInfo: { router?: ReturnType<typeof useRouter>; pathName?: string } = {};
+const routerInfo: { router?: ReturnType<typeof useRouter>; pathName?: string } =
+    {};
 
-export function setRouter(router: ReturnType<typeof useRouter>, pathName: string) {
+export function setRouter(
+    router: ReturnType<typeof useRouter>,
+    pathName: string
+) {
     routerInfo.router = router;
     routerInfo.pathName = pathName;
 }
@@ -46,11 +50,31 @@ export const frontendConfig = (): SuperTokensConfig => {
                 },
             };
         },
+        // style: `        [data-supertokens~=container] {
+        //     --palette-background: 51, 51, 51;
+        //     --palette-inputBackground: 41, 41, 41;
+        //     --palette-inputBorder: 41, 41, 41;
+        //     --palette-textTitle: 255, 255, 255;
+        //     --palette-textLabel: 255, 255, 255;
+        //     --palette-textPrimary: 255, 255, 255;
+        //     --palette-error: 173, 46, 46;
+        //     --palette-textInput: 169, 169, 169;
+        //     --palette-textLink: 169, 169, 169;
+        // }`,
+        style: `
+         [data-supertokens~=superTokensBranding] {
+            display: none;
+        }`,
     };
 };
 
 export const recipeDetails = {
-    docsLink: "https://supertokens.com/docs/thirdpartypasswordless/introduction",
+    docsLink:
+        "https://supertokens.com/docs/thirdpartypasswordless/introduction",
 };
 
-export const PreBuiltUIList = [EmailPasswordPreBuiltUI, ThirdPartyPreBuiltUI, PasswordlessPreBuiltUI];
+export const PreBuiltUIList = [
+    EmailPasswordPreBuiltUI,
+    ThirdPartyPreBuiltUI,
+    PasswordlessPreBuiltUI,
+];
