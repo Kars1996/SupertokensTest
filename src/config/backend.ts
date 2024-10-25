@@ -22,17 +22,14 @@ export let backendConfig = (): TypeInput => {
             ThirdPartyNode.init({
                 signInAndUpFeature: {
                     providers: [
-                        // We have provided you with development keys which you can use for testing.
-                        // IMPORTANT: Please replace them with your own OAuth keys for production use.
                         {
                             config: {
                                 thirdPartyId: "google",
                                 clients: [
                                     {
-                                        clientId:
-                                            "1060725074195-kmeum4crr01uirfl2op9kd5acmi9jutn.apps.googleusercontent.com",
+                                        clientId: process.env.GOOGLE_ID!,
                                         clientSecret:
-                                            "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",
+                                            process.env.GOOGLE_SECRET!,
                                     },
                                 ],
                             },
@@ -42,9 +39,9 @@ export let backendConfig = (): TypeInput => {
                                 thirdPartyId: "github",
                                 clients: [
                                     {
-                                        clientId: "467101b197249757c71f",
+                                        clientId: process.env.GITHUB_ID!,
                                         clientSecret:
-                                            "e97051221f4b6426e8fe8d51486396703012f5bd",
+                                            process.env.GITHUB_SECRET!,
                                     },
                                 ],
                             },
@@ -54,13 +51,12 @@ export let backendConfig = (): TypeInput => {
                                 thirdPartyId: "apple",
                                 clients: [
                                     {
-                                        clientId:
-                                            "4398792-io.supertokens.example.service",
+                                        clientId: process.env.APPLE_ID!,
                                         additionalConfig: {
-                                            keyId: "7M48Y4RYDL",
+                                            keyId: process.env.APPLE_KEYID!,
                                             privateKey:
-                                                "-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgu8gXs+XYkqXD6Ala9Sf/iJXzhbwcoG5dMh1OonpdJUmgCgYIKoZIzj0DAQehRANCAASfrvlFbFCYqn3I2zeknYXLwtH30JuOKestDbSfZYxZNMqhF/OzdZFTV0zc5u5s3eN+oCWbnvl0hM+9IW0UlkdA\n-----END PRIVATE KEY-----",
-                                            teamId: "YWQCXGJRJL",
+                                                process.env.APPLE_PRIVATEKEY!,
+                                            teamId: process.env.APPLE_TEAMID!,
                                         },
                                     },
                                 ],
@@ -71,10 +67,9 @@ export let backendConfig = (): TypeInput => {
                                 thirdPartyId: "twitter",
                                 clients: [
                                     {
-                                        clientId:
-                                            "4398792-WXpqVXRiazdRMGNJdEZIa3RVQXc6MTpjaQ",
+                                        clientId: process.env.TWITTER_ID!,
                                         clientSecret:
-                                            "BivMbtwmcygbRLNQ0zk45yxvW246tnYnTFFq-LH39NwZMxFpdC",
+                                            process.env.TWITTER_SECRET!,
                                     },
                                 ],
                             },
@@ -86,7 +81,27 @@ export let backendConfig = (): TypeInput => {
                 contactMethod: "EMAIL_OR_PHONE",
                 flowType: "USER_INPUT_CODE_AND_MAGIC_LINK",
             }),
-            SessionNode.init(),
+            SessionNode.init({
+                override: {
+                    functions: (originalImplementation) => {
+                        return {
+                            ...originalImplementation,
+                            createNewSession: async (input) => {
+                                const response =
+                                    await originalImplementation.createNewSession(
+                                        input
+                                    );
+                                response.getAccessTokenPayload({
+                                    redirectToPath:
+                                        input.userContext.redirectToPath ??
+                                        "/dash",
+                                });
+                                return response;
+                            },
+                        };
+                    },
+                },
+            }),
             Dashboard.init(),
             UserRoles.init(),
         ],
