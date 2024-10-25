@@ -31,7 +31,8 @@ export let backendConfig = (): TypeInput => {
                                     {
                                         clientId:
                                             "1060725074195-kmeum4crr01uirfl2op9kd5acmi9jutn.apps.googleusercontent.com",
-                                        clientSecret: "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",
+                                        clientSecret:
+                                            "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",
                                     },
                                 ],
                             },
@@ -42,7 +43,8 @@ export let backendConfig = (): TypeInput => {
                                 clients: [
                                     {
                                         clientId: "467101b197249757c71f",
-                                        clientSecret: "e97051221f4b6426e8fe8d51486396703012f5bd",
+                                        clientSecret:
+                                            "e97051221f4b6426e8fe8d51486396703012f5bd",
                                     },
                                 ],
                             },
@@ -52,7 +54,8 @@ export let backendConfig = (): TypeInput => {
                                 thirdPartyId: "apple",
                                 clients: [
                                     {
-                                        clientId: "4398792-io.supertokens.example.service",
+                                        clientId:
+                                            "4398792-io.supertokens.example.service",
                                         additionalConfig: {
                                             keyId: "7M48Y4RYDL",
                                             privateKey:
@@ -68,8 +71,10 @@ export let backendConfig = (): TypeInput => {
                                 thirdPartyId: "twitter",
                                 clients: [
                                     {
-                                        clientId: "4398792-WXpqVXRiazdRMGNJdEZIa3RVQXc6MTpjaQ",
-                                        clientSecret: "BivMbtwmcygbRLNQ0zk45yxvW246tnYnTFFq-LH39NwZMxFpdC",
+                                        clientId:
+                                            "4398792-WXpqVXRiazdRMGNJdEZIa3RVQXc6MTpjaQ",
+                                        clientSecret:
+                                            "BivMbtwmcygbRLNQ0zk45yxvW246tnYnTFFq-LH39NwZMxFpdC",
                                     },
                                 ],
                             },

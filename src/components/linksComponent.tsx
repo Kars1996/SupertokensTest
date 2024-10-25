@@ -16,7 +16,11 @@ const SignOutLink = (props: { name: string; link: string; icon: string }) => {
                 SuperTokens.redirectToAuth();
             }}
         >
-            <Image className={styles.linkIcon} src={props.icon} alt={props.name} />
+            <Image
+                className={styles.linkIcon}
+                src={props.icon}
+                alt={props.name}
+            />
             <div role={"button"}>{props.name}</div>
         </div>
     );
@@ -49,12 +53,28 @@ export const LinksComponent = () => {
         <div className={styles.bottomLinksContainer}>
             {links.map((link) => {
                 if (link.name === "Sign Out") {
-                    return <SignOutLink name={link.name} link={link.link} icon={link.icon} key={link.name} />;
+                    return (
+                        <SignOutLink
+                            name={link.name}
+                            link={link.link}
+                            icon={link.icon}
+                            key={link.name}
+                        />
+                    );
                 }
 
                 return (
-                    <Link href={link.link} className={styles.linksContainerLink} key={link.name} target="_blank">
-                        <Image className={styles.linkIcon} src={link.icon} alt={link.name} />
+                    <Link
+                        href={link.link}
+                        className={styles.linksContainerLink}
+                        key={link.name}
+                        target="_blank"
+                    >
+                        <Image
+                            className={styles.linkIcon}
+                            src={link.icon}
+                            alt={link.name}
+                        />
                         <div role={"button"}>{link.name}</div>
                     </Link>
                 );
